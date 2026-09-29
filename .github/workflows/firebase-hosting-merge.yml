@@ -11,10 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/setup@v2
         with:
           version: "12"
-      - run: pnpm install --frozen-lockfile && pnpm run build
+          cache: true # pnpm ストアのキャッシュを有効化
+          install: true # 自動的に pnpm install を実行
+      - run: pnpm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
